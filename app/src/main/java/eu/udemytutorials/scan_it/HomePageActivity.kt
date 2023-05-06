@@ -25,6 +25,7 @@ import android.graphics.Bitmap
 
 import android.app.Activity
 import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
 
 
 class HomePageActivity : AppCompatActivity() {
@@ -32,6 +33,10 @@ class HomePageActivity : AppCompatActivity() {
     private lateinit var btnClick : Button
     private lateinit var  adb : AlertDialog.Builder
     private lateinit var imgview : ImageView
+    val CAMERA_REQUEST_CODE = 100
+    val GALLERY_REQUEST_CODE = 200
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +44,7 @@ class HomePageActivity : AppCompatActivity() {
 
         imgview = findViewById(R.id.imgview1)
         btnClick = findViewById(R.id.btn_click)
-        btnClick.setOnClickListener{
+        btnClick.setOnClickListener(){
             selectImage()
         }
 
@@ -54,17 +59,24 @@ class HomePageActivity : AppCompatActivity() {
                 if(which==0){
                     val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                     if (permission != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 1)
-                        // Permission is not granted, request for permission
-
-                    } else {
-                        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        startActivityForResult(cameraIntent, 1)
-                        // Permission is already granted, proceed with your camera related operations
+                        ActivityCompat.requestPermissions(this,
+                            arrayOf(Manifest.permission.CAMERA), CAMERA_REQUEST_CODE)
+                    }
+                    else {
+                        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        startActivityForResult(intent, CAMERA_REQUEST_CODE)
+//
                     }
                 }
                 else if(which==1){
-
+                    val galleryPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    if (galleryPermission == PackageManager.PERMISSION_GRANTED) {
+                        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        startActivityForResult(intent, GALLERY_REQUEST_CODE)
+                    } else {
+                        ActivityCompat.requestPermissions(this,
+                            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), GALLERY_REQUEST_CODE)
+                    }
                 }
                 else{
                     dialog.cancel()
@@ -77,12 +89,37 @@ class HomePageActivity : AppCompatActivity() {
 //    private fun checkCameraPermission(): Boolean {
 //        return true
 //    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//    super.onActivityResult(requestCode, resultCode, data)
+//    if (requestCode == 1 && resultCode == RESULT_OK) {
+//            val photo = data?.extras!!["data"] as Bitmap?
+//            imgview.setImageBitmap(photo)
+//    }
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    if (requestCode == 1 && resultCode == RESULT_OK) {
-            val photo = data?.extras!!["data"] as Bitmap?
-            imgview.setImageBitmap(photo)
+    when (requestCode) {
+        CAMERA_REQUEST_CODE -> {
+            if (resultCode == Activity.RESULT_OK) {
+                val imageBitmap = data?.extras?.get("data") as Bitmap
+                imgview.setImageBitmap(imageBitmap)
+                val intent = Intent(this, Activity2::class.java)
+                // Do something with the image bitmap
+            }
+        }
+        GALLERY_REQUEST_CODE -> {
+            if (resultCode == Activity.RESULT_OK) {
+                val imageUri = data?.data
+                imgview.setImageURI(imageUri)
+                val intent = Intent(this, Activity2::class.java)
+                // Do something with the image uri
+            }
+        }
     }
+//    if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+//        val imageBitmap = data?.extras?.get("data") as Bitmap
+//        imgview.setImageBitmap(imageBitmap)
+//        // Do something with the image bitmap
+//    }
+}
 }
 
-}
