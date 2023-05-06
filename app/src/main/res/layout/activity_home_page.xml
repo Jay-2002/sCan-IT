@@ -89,7 +89,20 @@
             android:text="Click"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/btn_upload"
             app:layout_constraintLeft_toLeftOf="parent"
+            >
+        </Button>
+        <Button
+            android:id="@+id/btn_upload"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:background="@drawable/camera_btn"
+            android:text="Upload"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/btn_click"
             app:layout_constraintRight_toRightOf="parent"
             >
         </Button>

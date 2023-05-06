@@ -16,9 +16,10 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-
-        //THIS IS DONE SO THAT OUR LOGO REMAINS THERE FOR 3 SECONDS
-        // BEFORE GOING TO OUR MAIN ACTIVITY
+//            val intent = Intent(this, HomePageActivity::class.java)
+//            startActivity(intent)
+//        THIS IS DONE SO THAT OUR LOGO REMAINS THERE FOR 3 SECONDS
+//         BEFORE GOING TO OUR MAIN ACTIVITY
         Handler().postDelayed({
             startActivity(Intent(this, HomePageActivity::class.java))
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
