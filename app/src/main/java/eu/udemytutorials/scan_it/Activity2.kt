@@ -90,4 +90,13 @@ class Activity2 : AppCompatActivity() {
 //        }
 
     }
+//    fun extractTextFromImage(image: Bitmap): String {
+//        val tessBaseApi = TessBaseAPI()
+//        tessBaseApi.init(applicationContext.getExternalFilesDir(null)?.absolutePath, "eng")
+//        tessBaseApi.setImage(image)
+//        val extractedText = tessBaseApi.utF8Text
+//        tessBaseApi.end()
+//        return extractedText
+//    }
+
 }
