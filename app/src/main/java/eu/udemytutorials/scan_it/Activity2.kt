@@ -1,5 +1,6 @@
 package eu.udemytutorials.scan_it
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
@@ -111,9 +112,11 @@ private fun detectText() {
             .addOnSuccessListener { visionText ->
                 // Get the recognized text
                 val text = visionText.text
+                val intent = Intent(this, Activity3::class.java)
+                intent.putExtra("text", text)
+                startActivity(intent)
 
-                // Do something with the text
-                Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+                //Toast.makeText(this, text, Toast.LENGTH_LONG).show()
             }
             .addOnFailureListener { e ->
                 // Handle any errors that occurred during text recognition
