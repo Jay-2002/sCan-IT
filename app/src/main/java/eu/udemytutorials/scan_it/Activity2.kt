@@ -1,24 +1,28 @@
 package eu.udemytutorials.scan_it
 
-import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizerOptions.DEFAULT_OPTIONS
 
 class Activity2 : AppCompatActivity() {
 
     private lateinit var imageView : ImageView
-
+    private lateinit var btnletsgo : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_2)
 
         imageView = findViewById(R.id.imgview1)
-
+        btnletsgo= findViewById(R.id.btnletsgo)
+        btnletsgo.setOnClickListener(){
+            detectText()
+        }
         val imageUriString = intent.getStringExtra("imageUri")
 
         // Set the image to the imageView
@@ -98,5 +102,25 @@ class Activity2 : AppCompatActivity() {
 //        tessBaseApi.end()
 //        return extractedText
 //    }
+private fun detectText() {
+    val imageUriString = intent.getStringExtra("imageUri")
+    if (imageUriString != null) {
+        val image = InputImage.fromFilePath(this, Uri.parse(imageUriString))
+        val recognizer = TextRecognition.getClient(DEFAULT_OPTIONS)
+        recognizer.process(image)
+            .addOnSuccessListener { visionText ->
+                // Get the recognized text
+                val text = visionText.text
+
+                // Do something with the text
+                Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener { e ->
+                // Handle any errors that occurred during text recognition
+                Toast.makeText(this, "Text recognition failed: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+    }
+}
+
 
 }

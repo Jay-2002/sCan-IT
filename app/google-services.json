@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "741540022756",
+    "project_id": "scan-it-b33ce",
+    "storage_bucket": "scan-it-b33ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741540022756:android:133762d575523e407a5ff1",
+        "android_client_info": {
+          "package_name": "eu.udemytutorials.scan_it"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741540022756-390b26hueq8qb0enupuu1ob56kk9fa1l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqpAlNcCkOZ2o7krF3cHEIjDHgDchImiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "741540022756-390b26hueq8qb0enupuu1ob56kk9fa1l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
